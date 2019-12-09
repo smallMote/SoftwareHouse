@@ -1,17 +1,22 @@
 <template>
   <div id="tutorial">
     <div class="logo">
-      <b-img-lazy :src="product.coverImgUrl" width="64" />
+      <b-img-lazy :src="product.software.coverImgUrl" :alt="product.software.seo" width="64" />
     </div>
     <h5 class="title">{{ product.title }}</h5>
     <section v-html="product.content" class="content"></section>
-    <comment-list />
+    <!-- 喜欢 -->
+    <comment-list :list="commentList.data" :total="commentList.count" />
   </div>
 </template>
 
 <script>
 import { BImgLazy } from 'bootstrap-vue'
+import axios from 'axios'
+import ProductAPI from '@/api/module/product'
 import CommentList from '@/components/CommentList.vue'
+
+const productAPI = new ProductAPI()
 export default {
   name: 'Tutorial',
   layout: 'TopControl',
@@ -21,6 +26,10 @@ export default {
   },
   data () {
     return {
+      tutorial: {
+        content: 'none'
+      },
+      commentList: [],
       product: {
         id: 0,
         name: 'Adobe Photoshop CC 2020',
@@ -32,6 +41,18 @@ export default {
         wangpanUrl: '',
         downloadLink: ''
       }
+    }
+  },
+  async asyncData ({ params }) {
+    const id = params.id
+    const results = await axios.all([
+      productAPI.fetchTutorial(id),
+      productAPI.fetchCommentList(id)])
+    const product = results[0].data.data
+    const commentList = results[1].data
+    return {
+      product,
+      commentList
     }
   }
 }

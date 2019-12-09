@@ -1,6 +1,6 @@
 <template>
   <div id="my">
-    <user-info />
+    <user-info :user="user" />
     <div class="main">
       <div class="system">
         <h5>系统设置</h5>
@@ -50,6 +50,23 @@ export default {
     BCol,
     UserInfo,
     BButton
+  },
+  data () {
+    return {
+      user: {}
+    }
+  },
+  mounted () {
+    const Cookies = require('@/utils/cookeis-util').default
+    const user = Cookies.get('user')
+    let token = ''
+    if (user) {
+      this.user = user
+      token = user.token
+    }
+    if (!token) {
+      this.$router.push('/login')
+    }
   }
 }
 </script>

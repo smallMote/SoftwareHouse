@@ -14,17 +14,20 @@
       </div>
       <div class="title">
         <h5>{{ shop.name }}</h5>
-        <p>{{ shop.summary }}</p>
+        <p class="desc">{{ shop.desc }}</p>
       </div>
     </div>
     <div class="main">
-      <product-list />
+      <product-list :list="shop.software" />
     </div>
   </div>
 </template>
 
 <script>
-import ProductList from '@/components/product/SearchProductList.vue'
+import ShopAPI from '@/api/module/ShopModule'
+import ProductList from '@/components/product/SearchProductList'
+
+const shopAPI = new ShopAPI()
 export default {
   name: 'SearchShopDetails',
   components: {
@@ -37,6 +40,17 @@ export default {
         summary: '创意营销解决方案'
       }
     }
+  },
+  async asyncData ({ params }) {
+    const shop = await shopAPI.fetchDetailUrl(params.id)
+    console.log('shop')
+    return {
+      shop: shop.data.data
+    }
+  },
+  async created () {
+    const shop = await shopAPI.fetchDetailUrl(6)
+    console.log(shop)
   }
 }
 </script>
@@ -64,10 +78,13 @@ export default {
     background rgba(255, 255, 255, 1)
     box-shadow 0 1px 3px #eeeeee
     border-radius 0.5rem
-    height 6rem
+    height 8rem
     padding: 1rem
     width: 100%
+    overflow hidden
     transform translateY(1.5rem)
+    .desc
+      font-size 1rem
   .fa
     font-size 1.2rem
   .fa-angle-left
@@ -78,7 +95,7 @@ export default {
     display flex
     justify-content space-between
 .main
-  padding-top: 4rem
+  padding-top: 6rem
   padding-bottom: 4rem
   margin 1rem
 </style>

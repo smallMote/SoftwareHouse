@@ -45,7 +45,7 @@ export default {
     }
   },
   methods: {
-    search (keyword) {
+    search (keyword = '') {
       this.$emit('search', keyword)
     }
   }

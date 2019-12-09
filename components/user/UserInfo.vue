@@ -3,7 +3,7 @@
     <div class="info">
       <div class="user">
         <img :src="userInfo.coverImgUrl" alt="软件之家">
-        <span>{{ userInfo.name }}</span>
+        <span>{{ user.nickName || user.account }}</span>
       </div>
       <span class="contact">
         <i class="fa fa-volume-control-phone"></i>
@@ -35,6 +35,12 @@
 <script>
 export default {
   name: 'UserInfo',
+  props: {
+    user: {
+      type: Object,
+      default: () => {}
+    }
+  },
   data () {
     return {
       userInfo: {

@@ -1,15 +1,15 @@
 <template>
   <div id="Home-product-list">
     <b-media
-      v-for="product in productList"
+      v-for="product in list"
       :key="product.id"
-      @click="goTutorial(product.id)"
+      @click="goTutorial(product.contentId)"
       class="product-item"
       right-align
     >
       <template v-slot:aside>
         <b-img-lazy
-          :src="product.coverImgUrl"
+          :src="product.cover_img_url"
           width="64"
           alt="placeholder"
         />
@@ -25,7 +25,7 @@
           <i class="fa fa-heart"></i>
           {{ product.like }}
         </b-badge>
-        <b-badge variant="info">
+        <b-badge v-if="product.brand " variant="info">
           {{ product.brand }}
         </b-badge>
       </p>
@@ -42,40 +42,21 @@ export default {
     BImgLazy,
     BBadge
   },
+  props: {
+    list: {
+      type: Array,
+      default: () => []
+    }
+  },
   data () {
     return {
-      productList: [
-        {
-          id: 0,
-          brand: 'Adobe',
-          name: 'Adobe Photoshop CC 2020',
-          like: 990,
-          download: 990,
-          desc: '你的完美设计工具',
-          coverImgUrl: require('@/static/images/product/ps.png'),
-          wangpanUrl: '',
-          downloadLink: ''
-        },
-        {
-          id: 1,
-          brand: 'Adobe',
-          name: 'Adobe Photoshop CC 2020',
-          like: 990,
-          download: 990,
-          desc: '你的完美设计工具',
-          coverImgUrl: require('@/static/images/product/au.png'),
-          wangpanUrl: '',
-          downloadLink: ''
-        }
-      ]
+      content: '',
+      productList: []
     }
   },
   methods: {
     goTutorial (id) {
-      this.$router.push({
-        name: 'search-tutorial',
-        params: { id }
-      })
+      this.$router.push(`/tutorial/${id}`)
     }
   }
 }

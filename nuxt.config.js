@@ -48,7 +48,27 @@ module.exports = {
     // Doc: https://bootstrap-vue.js.org
     'bootstrap-vue/nuxt',
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    // 跨域处理
+    '@nuxtjs/proxy',
+    [
+      'cookie-universal-nuxt',
+      {
+        alias: 'cookiz'
+      }
+    ]
+  ],
+  proxy: [
+    [
+      '/api', // 拦截目录
+      {
+        target: 'http://localhost:10086', // 代理api主机
+        ws: true,
+        pathRewrite: {
+          '^/api': ''
+        }
+      }
+    ]
   ],
   /*
   ** Axios module configuration
@@ -59,9 +79,9 @@ module.exports = {
   ** Build configuration
   */
   build: {
-    /*
-    ** You can extend webpack config here
-    */
+    extractCSS: {
+      allChunks: true
+    },
     extend (config, ctx) {
     }
   }

@@ -15,9 +15,11 @@ module.exports = {
   rules: {
     'nuxt/no-cjs-in-config': 'off',
     'no-console': 'off',
+    'no-useless-constructor': 'off',
     'vue/space-before-function-pare': 'off',
     'vue/singleline-html-element-content-newline': 'off',
     'vue/html-self-closing': 'off',
-    'vue/no-parsing-error': 'off'
+    'vue/no-parsing-error': 'off',
+    'vue/order-in-components': 'off'
   }
 }

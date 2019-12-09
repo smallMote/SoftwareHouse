@@ -1,13 +1,13 @@
 <template>
   <div id="search-product-list">
     <b-media
-      v-for="product in productList"
+      v-for="product in list"
       :key="product.id"
       class="product-item"
     >
       <template v-slot:aside>
         <b-img-lazy
-          :src="product.coverImgUrl"
+          :src="product.cover_img_url"
           width="64"
           alt="placeholder"
         />
@@ -42,6 +42,12 @@ export default {
     BMedia,
     BImgLazy,
     BBadge
+  },
+  props: {
+    list: {
+      type: Array,
+      default: () => []
+    }
   },
   data () {
     return {
@@ -81,10 +87,7 @@ export default {
   },
   methods: {
     goTutorial (id) {
-      this.$router.push({
-        name: 'search-tutorial',
-        params: { id }
-      })
+      this.$router.push(`/tutorial/${id}`)
     }
   }
 }

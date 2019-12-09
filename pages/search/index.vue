@@ -9,20 +9,26 @@
           id="search-input"
           v-model="keyword"
           :placeholder="placeholder"
-          @keydown.enter="search"
+          @keydown.enter="search(keyword)"
+          autofocus
           type="text"
         />
       </label>
       <span v-show="!keyword" @click="cancel" class="cancel-btn">取消</span>
     </div>
     <keyword-panel v-if="showKeywordPanel" @search="search" />
-    <shop-list />
+    <shop-list
+      v-if="!showKeywordPanel && shopList.length"
+      :shop-list="shopList"
+    />
   </div>
 </template>
 
 <script>
 import KeywordPanel from './KeywordPanel'
 import ShopList from '@/components/product/SearchShopList'
+import ShopAPI from '@/api/module/ShopModule'
+const shopAPI = new ShopAPI()
 export default {
   name: 'Search',
   components: {
@@ -33,15 +39,21 @@ export default {
     return {
       keyword: '',
       placeholder: 'Adobe Photoshop CC 2020',
-      showKeywordPanel: false
+      showKeywordPanel: true,
+      total: 0,
+      shopList: []
     }
   },
   methods: {
-    search (keyword) {
-      if (!keyword) {
-        this.keyword = keyword
-      }
+    async search (keyword = '') {
+      this.keyword = keyword
+      const result = await shopAPI.searchShopList(keyword)
       this.showKeywordPanel = false
+      if (result && result.data.code === 0) {
+        const { count, data } = result.data
+        this.total = count
+        this.shopList = data
+      }
     },
     cancel () {
       this.$router.go(-1)

@@ -55,15 +55,15 @@
         </ul>
         <div class="header-banner">
           <b-carousel>
-            <b-carousel-slide img-src="https://picsum.photos/1024/280/?image=54" />
-            <b-carousel-slide img-src="https://picsum.photos/1024/280/?image=58" />
-            <b-carousel-slide img-src="https://picsum.photos/1024/280/?image=55" />
+            <b-carousel-slide :img-src="require('@/static/images/banner/1.jpg')" />
+            <b-carousel-slide :img-src="require('@/static/images/banner/2.jpg')" />
+            <b-carousel-slide :img-src="require('@/static/images/banner/3.jpg')" />
           </b-carousel>
         </div>
       </div>
     </div>
     <div class="product-list">
-      <product-list />
+      <product-list :list="homeProductList" />
     </div>
   </div>
 </template>
@@ -72,12 +72,25 @@
 import { BCarousel, BCarouselSlide } from 'bootstrap-vue'
 import SearchInputBtn from './SearchInputBtn.vue'
 import ProductList from '@/components/product/HomeProductList.vue'
+import ProductAPI from '@/api/module/product'
+const productAPI = new ProductAPI()
 export default {
   components: {
     BCarousel,
     BCarouselSlide,
     SearchInputBtn,
     ProductList
+  },
+  data () {
+    return {
+      homeProductList: []
+    }
+  },
+  async asyncData () {
+    const { data } = await productAPI.fetchHomeList()
+    return {
+      homeProductList: data.data.rows
+    }
   }
 }
 </script>

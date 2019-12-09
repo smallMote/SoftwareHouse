@@ -1,11 +1,33 @@
 <template>
   <div id="comment-list">
-    <b-media class="comment" v-for="item in commentList" :key="item.id">
+    <b-media class="comment">
+      <template v-slot:aside>
+        <b-img blank blank-color="#ccc" width="32"></b-img>
+      </template>
+      <section class="content">
+        <b-form-textarea
+          v-model="content"
+          rows="3"
+          max-rows="8"
+          placeholder="留言通过审核，所有人可见"
+        />
+        <div class="action">
+          <b-button
+            class="submit-btn"
+            variant="success"
+            size="sm"
+          >
+            提交
+          </b-button>
+        </div>
+      </section>
+    </b-media>
+    <b-media v-for="item in list" :key="item.id" class="comment">
       <template v-slot:aside>
         <b-img blank blank-color="#ccc" width="32"></b-img>
       </template>
       <h5 class="title">
-        <span>{{ item.username }}</span>
+        <span>{{ item.user.account }}</span>
         <span @click="like(item.id)">
           <i v-if="item.isLike" class="fa fa-thumbs-up"></i>
           <i v-else class="fa fa-thumbs-o-up"></i>
@@ -18,46 +40,39 @@
 </template>
 
 <script>
-import { BMedia, BImg } from 'bootstrap-vue'
+import { BMedia, BImg, BFormTextarea, BButton } from 'bootstrap-vue'
 export default {
   name: 'CommentList',
   components: {
     BImg,
-    BMedia
+    BMedia,
+    BButton,
+    BFormTextarea
+  },
+  props: {
+    list: {
+      type: Array,
+      default: () => []
+    },
+    total: {
+      type: Number,
+      default: 0
+    }
   },
   data () {
     return {
-      commentList: [
-        {
-          id: 1,
-          username: 'Luck Yang',
-          coverImgUrl: '',
-          content: '这软件太牛了吧',
-          like: 91,
-          isLike: false
-        },
-        {
-          id: 2,
-          username: 'Luck Yang',
-          coverImgUrl: '',
-          content: '这软件太牛了吧',
-          like: 31,
-          isLike: false
-        },
-        {
-          id: 3,
-          username: 'Luck Yang',
-          coverImgUrl: '',
-          content: '这软件太牛了吧',
-          like: 11,
-          isLike: false
-        }
-      ]
+      commentList: [],
+      content: ''
+    }
+  },
+  computed: {
+    submitContent () {
+      return this.content && this.content.trim()
     }
   },
   methods: {
     like (id) {
-      this.commentList.map((item, index, arr) => {
+      this.list.map((item, index, arr) => {
         if (item.id === id) {
           const comment = arr[index]
           comment.isLike = !comment.isLike
@@ -68,6 +83,14 @@ export default {
           }
         }
       })
+    }
+  },
+  watch: {
+    content (val) {
+      const str = val + '\n\n'
+      if (val) {
+        this.content = str
+      }
     }
   }
 }
@@ -87,4 +110,9 @@ export default {
   .fa
     font-size unset
     font-weight bold
+.content
+  .action
+    text-align right
+    .submit-btn
+      margin-top: 1rem
 </style>

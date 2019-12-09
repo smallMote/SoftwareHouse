@@ -1,19 +1,19 @@
 <template>
   <div id="search-shop-list">
     <section
-      v-for="shop in searchResult"
+      v-for="shop in shopList"
       :key="shop.id"
       class="product"
     >
       <b-media>
         <template v-slot:aside>
           <b-img-lazy
-            :src="shop.brandLogo"
+            :src="shop.cover_img_url"
             width="64"
             alt="placeholder"
           ></b-img-lazy>
         </template>
-        <h5 @click="$router.push(`/search/${shop.id}`)">{{ shop.brand }}</h5>
+        <h5 @click="$router.push(`/search/${shop.id}`)">{{ shop.name }}</h5>
         <p @click="$router.push(`/search/${shop.id}`)">
           <b-badge variant="success">
             <i class="fa fa-download"></i>
@@ -27,14 +27,19 @@
         <p @click="$router.push(`/search/${shop.id}`)" class="desc">{{ shop.desc }}</p>
         <div class="slider">
           <b-img-lazy
-            v-for="product in shop.products"
+            v-for="product in shop.software"
             :key="product.id"
-            :src="product.coverImgUrl"
+            :src="product.cover_img_url"
             blant
             width="64"
-            alt="placeholder"
+            alt="图片丢失"
           ></b-img-lazy>
-          <nuxt-link :to="`/search/${shop.id}`" tag="a" class="more-btn">
+          <nuxt-link
+            v-if="shop.software.length === 3"
+            :to="`/search/${shop.id}`"
+            tag="a"
+            class="more-btn"
+          >
             更多
             <i class="fa fa-chevron-right"></i>
           </nuxt-link>
@@ -53,12 +58,18 @@ export default {
     BMedia,
     BBadge
   },
+  props: {
+    shopList: {
+      type: Array,
+      default: () => []
+    }
+  },
   data () {
     return {
       searchResult: [
         {
           id: 1,
-          brand: 'Adobe',
+          name: 'Adobe',
           like: 1688,
           download: 980,
           brandLogo: require('@/static/images/product/adobe.jpeg'),
