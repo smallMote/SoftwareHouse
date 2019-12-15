@@ -62,8 +62,10 @@ export default {
 .logo, .title
   display flex
   justify-content center
-.title
+h5.title
   margin-top: 1rem
+  font-size 1.5rem
+  font-weight 500
 .content
   margin 2rem 0
 </style>

@@ -11,11 +11,20 @@ import MenuTab from '@/components/MenuTab'
 export default {
   components: {
     MenuTab
+  },
+  data () {
+    return {
+      transitionName: 'slide-left'
+    }
+  },
+  created () {
+    this.$store.commit('setUser', this.$cookiz.get('user'))
   }
 }
 </script>
 <style lang="stylus">
 @import "~assets/stylus/base.styl"
+@import "~assets/stylus/page-change"
 .default-wallpaper
   position relative
   width: 100%

@@ -1,8 +1,18 @@
 <template>
   <div id="comment-list">
-    <b-media class="comment">
+    <div v-if="!user.token" class="tips-login">
+      <b-button
+        @click="go2login"
+        size="sm"
+        variant="outline-warning"
+      >
+        登陆后可评论
+      </b-button>
+    </div>
+    <b-media v-if="user.token" class="comment">
       <template v-slot:aside>
-        <b-img blank blank-color="#ccc" width="32"></b-img>
+        <b-img-lazy v-if="user.coverImgUrl" :src="user.coverImgUrl" width="32" />
+        <b-img v-else blank blank-color="#ccc" width="32"></b-img>
       </template>
       <section class="content">
         <b-form-textarea
@@ -40,13 +50,14 @@
 </template>
 
 <script>
-import { BMedia, BImg, BFormTextarea, BButton } from 'bootstrap-vue'
+import { BMedia, BImg, BFormTextarea, BButton, BImgLazy } from 'bootstrap-vue'
 export default {
   name: 'CommentList',
   components: {
     BImg,
     BMedia,
     BButton,
+    BImgLazy,
     BFormTextarea
   },
   props: {
@@ -66,11 +77,17 @@ export default {
     }
   },
   computed: {
+    user () {
+      return this.$cookiz.get('user')
+    },
     submitContent () {
       return this.content && this.content.trim()
     }
   },
   methods: {
+    go2login () {
+      this.$router.push('/login')
+    },
     like (id) {
       this.list.map((item, index, arr) => {
         if (item.id === id) {
@@ -97,6 +114,8 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+.tips-login
+  text-align center
 .comment
   margin-bottom: 2rem
 .title

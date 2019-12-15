@@ -5,6 +5,10 @@
         <i class="fa fa-home"></i>
         <p>首页</p>
       </nuxt-link>
+      <nuxt-link tag="li" to="/lazy" class="menu-item">
+        <i class="fa fa-blind"></i>
+        <p>散人</p>
+      </nuxt-link>
       <nuxt-link tag="li" to="/my" class="menu-item">
         <i class="fa fa-user"></i>
         <p>我的</p>

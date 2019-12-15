@@ -30,9 +30,9 @@
             v-for="product in shop.software"
             :key="product.id"
             :src="product.cover_img_url"
+            :alt="product.name"
             blant
             width="64"
-            alt="图片丢失"
           ></b-img-lazy>
           <nuxt-link
             v-if="shop.software.length === 3"
@@ -66,33 +66,7 @@ export default {
   },
   data () {
     return {
-      searchResult: [
-        {
-          id: 1,
-          name: 'Adobe',
-          like: 1688,
-          download: 980,
-          brandLogo: require('@/static/images/product/adobe.jpeg'),
-          desc: `
-          美国一家跨国电脑软件公司，总部位于加州的圣何塞，其官方大中华部门内也常
-          以中文“奥多比”自称。主要从事多媒体制作类软件的开发，近年亦开始涉足丰富
-          互联网应用程序、市场营销应用程序、金融分析应用程序等软件开发。`,
-          products: [
-            {
-              id: 0,
-              coverImgUrl: require('@/static/images/product/ps.png')
-            },
-            {
-              id: 1,
-              coverImgUrl: require('@/static/images/product/au.png')
-            },
-            {
-              id: 2,
-              coverImgUrl: require('@/static/images/product/ai.png')
-            }
-          ]
-        }
-      ]
+      searchResult: []
     }
   }
 }

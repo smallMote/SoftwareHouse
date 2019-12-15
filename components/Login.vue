@@ -23,7 +23,6 @@
 
 <script>
 import { BButton, BFormInput } from 'bootstrap-vue'
-import Cookies from '@/utils/cookeis-util'
 import UserAPI from '@/api/module/user'
 const userAPI = new UserAPI()
 export default {
@@ -47,7 +46,17 @@ export default {
       }
       const result = await userAPI.login(account, password)
       if (result && result.data.code === 0) {
-        Cookies.set('user', result.data.data)
+        const user = result.data.data
+        this.$cookiz.set('user', {
+          ...user,
+          name: user.account,
+          coverImgUrl: user.cover_img_url || require('@/static/images/user/user-cover.png')
+        })
+        this.$store.commit('setUser', {
+          ...user,
+          name: user.account,
+          coverImgUrl: user.cover_img_url || require('@/static/images/user/user-cover.png')
+        })
         this.$router.push('/my')
       }
     }

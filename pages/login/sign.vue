@@ -121,7 +121,13 @@ export default {
       if (regResult) {
         const loginResult = await userAPI.login(this.account, this.password)
         const token = loginResult.data.data
-        console.log(token)
+        const user = {
+          token,
+          name: this.account,
+          coverImgUrl: require('@/static/images/user/user-cover.png')
+        }
+        localStorage.setItem('user', user)
+        this.$store.commit('setUser', user)
       }
     },
     async login () {},

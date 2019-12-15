@@ -4,7 +4,6 @@
       @click="$router.push('/search')"
       class="search-input-btn"
     >
-      <i class="fa fa-search"></i>
       <span>{{ message }}</span>
     </div>
     <div class="search-keywords">
@@ -30,8 +29,8 @@ export default {
   },
   data () {
     return {
-      message: 'Adobe Photoshop CC 2020',
-      badges: ['办公', '设计', '编程']
+      message: 'office',
+      badges: []
     }
   }
 }

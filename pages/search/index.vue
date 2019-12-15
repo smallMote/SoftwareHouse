@@ -38,16 +38,20 @@ export default {
   data () {
     return {
       keyword: '',
-      placeholder: 'Adobe Photoshop CC 2020',
+      defKeyword: '',
+      placeholder: 'office',
       showKeywordPanel: true,
       total: 0,
       shopList: []
     }
   },
+  created () {
+    this.defKeyword = this.placeholder
+  },
   methods: {
-    async search (keyword = '') {
-      this.keyword = keyword
-      const result = await shopAPI.searchShopList(keyword)
+    async search (keyword = this.defKeyword) {
+      this.keyword = keyword || this.defKeyword
+      const result = await shopAPI.searchShopList(this.keyword)
       this.showKeywordPanel = false
       if (result && result.data.code === 0) {
         const { count, data } = result.data
@@ -59,6 +63,11 @@ export default {
       this.$router.go(-1)
       this.keyword = ''
       this.showKeywordPanel = true
+    }
+  },
+  watch: {
+    keyword (val) {
+      this.defKeyword = val
     }
   }
 }

@@ -12,7 +12,7 @@
           alt="placeholder"
         />
       </template>
-      <h5 @click="goTutorial(product.id)">{{ product.name }}</h5>
+      <h5 @click="goTutorial(product.contentId)">{{ product.name }}</h5>
       <p>{{ product.desc }}</p>
       <p>
         <b-badge variant="success">

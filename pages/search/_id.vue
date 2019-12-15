@@ -43,14 +43,9 @@ export default {
   },
   async asyncData ({ params }) {
     const shop = await shopAPI.fetchDetailUrl(params.id)
-    console.log('shop')
     return {
       shop: shop.data.data
     }
-  },
-  async created () {
-    const shop = await shopAPI.fetchDetailUrl(6)
-    console.log(shop)
   }
 }
 </script>

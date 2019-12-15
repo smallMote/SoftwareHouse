@@ -30,6 +30,7 @@
         </b-badge>
       </p>
     </b-media>
+    <div class="tips">亲,已经到底了～</div>
   </div>
 </template>
 
@@ -69,4 +70,7 @@ export default {
   border-radius 0.25rem
   margin-top: 2rem
   margin-bottom: 2rem
+.tips
+  color #ccc
+  text-align center
 </style>
