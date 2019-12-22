@@ -23,10 +23,12 @@ UI：bootstrap 4.1.3 bootstrop-vue 2.0.0
 后台 node app.js | yarn dev  
 打包依赖：需要使用node pm2
 
-###### 预览
-![](./static/images/preview/3.png)
-![](./static/images/preview/10.png)
-![](./static/images/preview/1.png)
+###### 预览（更多预览可在static/images/preview文件夹中找到）
+<div style="display: flex;justify-content: space-between">
+  <img src="http://q1vzg0jwp.bkt.clouddn.com/preview/3.png" width="30%" alt="" />
+  <img src="http://q1vzg0jwp.bkt.clouddn.com/preview/1.png" width="30%" alt="" />
+  <img src="http://q1vzg0jwp.bkt.clouddn.com/preview/10.png" width="30%" alt="" />
+</div>
 
 ###### License
 在一切合法条件下可使用此软件。软件内部图片、文本内容皆来源于网络。如有涉及版权异议请及时联系作者！
