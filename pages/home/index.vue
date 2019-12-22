@@ -3,54 +3,31 @@
     <div class="header">
       <search-input-btn />
       <ul class="platform">
-        <li class="platform-item">
-          <i class="fa fa-windows"></i>
-          <p>Win</p>
-        </li>
-        <li class="platform-item">
-          <i class="fa fa-apple"></i>
-          <p>Mac</p>
-        </li>
-        <li class="platform-item">
-          <i class="fa fa-mobile-phone"></i>
-          <p>IOS</p>
-        </li>
-        <li class="platform-item">
-          <i class="fa fa-android"></i>
-          <p>Android</p>
+        <li
+          v-for="item in firstClassify"
+          :key="item.name"
+          @click="search(item.name)"
+          class="platform-item"
+        >
+          <i :class="item.icon"></i>
+          <p>{{ item.name }}</p>
         </li>
       </ul>
       <div class="classify">
         <ul class="useful">
-          <li class="useful-item office">
-            <div class="useful-icon">
-              <i class="fa fa-paperclip"></i>
+          <li
+            v-for="item in secondClassify"
+            :key="item.name"
+            @click="search(item.name)"
+            class="useful-item"
+          >
+            <div
+              :style="{ background: item.bgColor }"
+              class="useful-icon"
+            >
+              <i :class="item.icon"></i>
             </div>
-            <p>办公</p>
-          </li>
-          <li class="useful-item design">
-            <div class="useful-icon">
-              <i class="fa fa-object-ungroup"></i>
-            </div>
-            <p>设计</p>
-          </li>
-          <li class="useful-item edit">
-            <div class="useful-icon">
-              <i class="fa fa-film"></i>
-            </div>
-            <p>剪辑</p>
-          </li>
-          <li class="useful-item program">
-            <div class="useful-icon">
-              <i class="fa fa-github"></i>
-            </div>
-            <p>编程</p>
-          </li>
-          <li class="useful-item distraction">
-            <div class="useful-icon">
-              <i class="fa fa-gamepad"></i>
-            </div>
-            <p>娱乐</p>
+            <p>{{ item.name }}</p>
           </li>
         </ul>
         <div class="header-banner">
@@ -87,9 +64,34 @@ export default {
     }
   },
   async asyncData () {
+    const firstClassify = [
+      { name: 'Win', icon: 'fa fa-windows' },
+      { name: 'Mac', icon: 'fa fa-apple' },
+      { name: 'IOS', icon: 'fa fa-mobile-phone' },
+      { name: 'Android', icon: 'fa fa-android' }
+    ]
+    const secondClassify = [
+      { name: '办公', icon: 'fa fa-paperclip', bgColor: '#FFA500' },
+      { name: '设计', icon: 'fa fa-object-ungroup', bgColor: '#ff433f' },
+      { name: '剪辑', icon: 'fa fa-film', bgColor: 'rgba(155, 86, 72, 0.89)' },
+      { name: '编程', icon: 'fa fa-github', bgColor: 'rgba(53, 166, 70, 0.87)' },
+      { name: '娱乐', icon: 'fa fa-gamepad', bgColor: '#ffc107' }
+    ]
     const { data } = await productAPI.fetchHomeList()
     return {
+      firstClassify,
+      secondClassify,
       homeProductList: data.data.rows
+    }
+  },
+  methods: {
+    search (keyword) {
+      this.$router.push({
+        path: '/search',
+        query: {
+          keyword
+        }
+      })
     }
   }
 }
@@ -128,17 +130,6 @@ export default {
   text-align center
   p
     margin-top: 0.25rem
-.useful-item
-  &.office .useful-icon
-    background orange
-  &.design .useful-icon
-    background #ff433f
-  &.edit .useful-icon
-    background rgba(155, 86, 72, 0.89)
-  &.program .useful-icon
-    background rgba(53, 166, 70, 0.87)
-  &.distraction .useful-icon
-    background #ffc107
 .useful-icon
   rect(4rem)
   background deepskyblue

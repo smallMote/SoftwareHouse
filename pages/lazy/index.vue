@@ -1,6 +1,8 @@
 <template>
   <div id="lazy">
-    <div class="desc"></div>
+    <div class="desc">
+      为懒人提供的福利，破解麻烦？这里为你提供注册码，填写即可使用，不定时更新！
+    </div>
     <div class="search-input-group">
       <label for="search-input">
         <input
@@ -72,7 +74,8 @@ label
     min-height 4rem
     border-radius 0.5rem
     background #ffffff40
-    transition 3s ease
+    transition 0.4s ease
+    padding 1rem
     /*animation borderRadius 3s linear infinite*/
   .list-container
     margin-top: 2rem

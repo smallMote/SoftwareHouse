@@ -2,15 +2,17 @@
   <div id="lazy-product-list">
     <b-row>
       <b-col v-for="item in list" :key="item.id" class="img-outer-box" cols="6" sm="3">
-        <div>
-          <b-img v-if="false" rounded blank blank-color="#ccc" width="100%"></b-img>
+        <div
+          @click="$router.push(`/lazy/${item.id}`)"
+          class="product-container"
+        >
           <b-img-lazy
+            :src="item.coverImgUrl"
             class="img-box"
-            src="https://picsum.photos/600/400/?image=80"
             width="100%"
             rounded
           />
-          <p>PhotoShop</p>
+          <p>{{ item.name }}</p>
         </div>
       </b-col>
     </b-row>
@@ -18,25 +20,23 @@
 </template>
 
 <script>
-import { BRow, BCol, BImg, BImgLazy } from 'bootstrap-vue'
+import { BRow, BCol, BImgLazy } from 'bootstrap-vue'
 export default {
   name: 'LazyProductList',
   components: {
     BRow,
     BCol,
-    BImg,
     BImgLazy
   },
   props: {
     list: {
       type: Array,
       default: () => [
-        { id: 1, coverImgUrl: '' },
-        { id: 2, coverImgUrl: '' },
-        { id: 3, coverImgUrl: '' },
-        { id: 4, coverImgUrl: '' },
-        { id: 5, coverImgUrl: '' },
-        { id: 6, coverImgUrl: '' }
+        {
+          id: 1,
+          name: 'WebStorm',
+          coverImgUrl: require('../../assets/product/webstorm.jpg')
+        }
       ]
     }
   }
@@ -44,11 +44,31 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+.row
+  padding 0
+  margin: 0
 .img-outer-box
   display flex
   align-items center
   justify-content center
   margin-bottom: 1rem
+  &:nth-child(odd) {
+    padding-left 0
+  }
+  &:nth-child(even) {
+    padding-right 0
+  }
   .img-box
     width: 100%
+.product-container
+  cursor pointer
+  p
+    text-align center
+    margin-top: 0.5rem
+@media screen and (min-width: 575px)
+  .img-outer-box
+    &:nth-child(odd)
+      padding-left 10px
+    &:nth-child(even)
+      padding-right 10px
 </style>

@@ -3,7 +3,14 @@ export const state = () => ({
 })
 
 export const mutations = {
-  setUser (state, { name, token, coverImgUrl }) {
-    state.user = { name, token, coverImgUrl }
+  setUser (state, user) {
+    if (!user) {
+      user = {
+        name: '',
+        token: '',
+        coverImgUrl: ''
+      }
+    }
+    state.user = { name: user.name, token: user.token, coverImgUrl: user.coverImgUrl }
   }
 }

@@ -15,7 +15,7 @@
           </b-col>
         </b-row>
       </div>
-      <div class="action-item">
+      <div @click="go2safe()" class="action-item">
         <span>账号与安全</span>
         <i class="fa fa-angle-right"></i>
       </div>
@@ -23,7 +23,10 @@
         <span>帮助与反馈</span>
         <i class="fa fa-angle-right"></i>
       </div>
-      <div class="action-item">
+      <div
+        @click="go2about()"
+        class="action-item"
+      >
         <span>关于软件之家</span>
         <span>
           版本1.0.0
@@ -32,6 +35,7 @@
       </div>
     </div>
     <b-button
+      @click="signOut()"
       class="sign-out-btn"
       variant="warning"
     >
@@ -57,8 +61,7 @@ export default {
     }
   },
   mounted () {
-    const Cookies = require('@/utils/cookeis-util').default
-    const user = Cookies.get('user')
+    const user = this.$cookiz.get('user')
     let token = ''
     if (user) {
       this.user = user
@@ -66,6 +69,24 @@ export default {
     }
     if (!token) {
       this.$router.push('/login')
+    }
+  },
+  methods: {
+    signOut () {
+      localStorage.removeItem('user')
+      const user = {
+        token: '',
+        name: '',
+        coverImgUrl: ''
+      }
+      this.$store.commit('setUser', user)
+      this.$router.push('/login')
+    },
+    go2about () {
+      window.open('https://github.com/smallMote/SoftwareHouse.git')
+    },
+    go2safe () {
+      this.$router.push('/my/safe')
     }
   }
 }

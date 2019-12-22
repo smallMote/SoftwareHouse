@@ -21,6 +21,18 @@
       v-if="!showKeywordPanel && shopList.length"
       :shop-list="shopList"
     />
+    <p
+      v-if="!showKeywordPanel && !shopList.length"
+      class="tips"
+    >
+      <img
+        :src="require('../../assets/source/void.svg')"
+        alt=""
+        width="60px"
+      >
+      <br>
+      抱歉，没有搜索到相关信息哦～
+    </p>
   </div>
 </template>
 
@@ -47,6 +59,11 @@ export default {
   },
   created () {
     this.defKeyword = this.placeholder
+    const paramKeyword = this.$route.query.keyword // 其他页面传递来的参数
+    if (paramKeyword) {
+      this.defKeyword = paramKeyword
+      this.search(paramKeyword)
+    }
   },
   methods: {
     async search (keyword = this.defKeyword) {
@@ -101,4 +118,13 @@ label
   text-align center
   .fa
     font-size 2rem
+.tips
+  line-height 2rem
+  text-align center
+  color #ccc
+  min-height 50vh
+  display flex
+  flex-direction column
+  justify-content center
+  align-items center
 </style>
